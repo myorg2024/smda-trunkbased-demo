@@ -40,3 +40,12 @@ Let’s push our code up to Github.
 
 git push origin mr/issue-2
 We should perform any tests that we need to validate the new functionality. Running python3 tbd-script.py will show us output that we can validate.
+Rebasing:
+Now that we’ve verified our feature works as expected, let’s open up a PR for the mr/issue-2 branch.
+
+[Key Concept] Uh oh. It looks like our PR is showing merge conflicts with master. Another developer on our team created a branch for feature 3 called al/issue-3. It looks like al/issue-3 was already merged into master. During development, it is common to have PRs being merged into master after our issue branch was originally branched from master. We need to get these new commits onto our mr/issue-2 branch. This process is known as rebasing.
+First, let’s update our local master branch
+
+git checkout master
+
+git pull --rebase origin master
