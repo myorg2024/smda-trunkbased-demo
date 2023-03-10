@@ -20,3 +20,23 @@ trunk based repo sample
 ## [Key Concept] Your PR MUST be approved and merged by someone who did not contribute any commits to the new branch. The more eyes we have on our code, the better the quality.
 
 ## Good job so far! We have successfully added a new feature into our master branch. Now everyone will know how great TBD is! Let’s start working on our second feature.
+Creating Our Second Feature
+Let’s pull and rebase remote master onto our local master branch.
+
+git pull --rebase origin master
+[Key Concept] Since our PR was approved and merged in Github, we need to make sure that our local master branch is up to date with our remote master. We are treating both masters as one and the same!
+
+Note: We’re using the --rebase flag to make sure that our local master’s history aligns with the remote. It also prevents any ugly merge bubbles!
+Now that our local master branch is up-to-date let’s get started on issue-2. We’ll repeat step 1.
+
+Let’s add some new functionality!
+cat << EOF > tbd-script.py
+print("Trunk-Based Development is awesome!")
+print("It allows for fast iteration!")      # new line added
+EOF
+git add tbd-script.py
+git commit -m "Adding new print statement to tbd script"
+Let’s push our code up to Github.
+
+git push origin mr/issue-2
+We should perform any tests that we need to validate the new functionality. Running python3 tbd-script.py will show us output that we can validate.
