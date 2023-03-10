@@ -69,3 +69,31 @@ Note: Our existing PR will be updated with any changes made to our branch.
 Cutting a realease 
 
 At this point in time, we are happy with our python app and we are ready to show it to the world. Since our application will be servicing users, we need to make sure that it is up and running at all times. In order to ensure the stability of our code we will be performing a release.
+Create a branch off master. Let’s call it RC/0.1 (RC = Release Candidate)
+
+git checkout master              # checking out to our master branch
+git pull --rebase origin master  # ensure that our local master is up-to-date with the remote master
+git checkout -b RC/0.1           # create the RC branch
+git push origin RC/0.1           # push RC branch to remote
+[Key Concept] RC branches are created off master periodically (usually at the end of a sprint) when we’re ready to release functionality developed in the previous sprint. These branches provide us with more stability than master, because we limit the amount of commits that we push to them. We limit pushed commits by requiring all new commits to be added via a hotfix.
+
+The Hot Fix Process
+A new branch is created to develop functionality that fixes the problem in our RC branch.
+The new branch is then merged into master.
+The commit/PR with the fix is cherry-picked onto our RC branch.
+git checkout RC/0.1                  # checkout to our RC branch
+git cherry-pick -m 1 -x <SHA>        # cherry pick commit onto our RC branch
+git push origin RC/0.1               # update remote RC with new fix
+Note: This assumes a cherry-pick of an entire PR which is most common. Additionally including the “-x” adds the original commit SHA to the cherry-pick commit message!
+
+Hotfixing is the only way new commits should make their way onto an RC branch. This process minimizes the likelihood of bad code making its way into our RC branches!
+
+RC branches are pretty stable because of our hotfix process. They are great for testing out our codebase in environments like staging. We want to be able to vet out code that will be released to production. However, there still exists the possibility of someone pushing commits to them. This makes them unfit for production. We will need to reference code that is immutable. It is time to cut a tag from our RC branch.
+
+Cut a Release (Tag)
+Cut a release by creating a tag on the release branch as follows:
+
+git checkout RC/0.1
+git tag -a -m "Releasing version 0.1.0" 0.1.0
+git push origin --tags
+[Key Concept] The 0.1.0 tag we just cut will provide users with an environment/application that works and includes all the functionality that we’ve developed so far. Every sprint we will go through this same process of cutting releases. Adhere to your preferred software versioning convention (consistency is what is important). Congratulations, we’ve released our codebase to production!
