@@ -66,3 +66,6 @@ Since we have added new commits to our branch’s git history, we need to pass i
 
 Note: Our existing PR will be updated with any changes made to our branch.
 
+Cutting a realease 
+
+At this point in time, we are happy with our python app and we are ready to show it to the world. Since our application will be servicing users, we need to make sure that it is up and running at all times. In order to ensure the stability of our code we will be performing a release.
