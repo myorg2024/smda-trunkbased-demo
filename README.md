@@ -49,3 +49,20 @@ First, let’s update our local master branch
 git checkout master
 
 git pull --rebase origin master
+
+Let’s grab the latest commits from our local master branch, and get them into our branch.
+
+git checkout mr/issue-2
+
+git rebase master
+[Key Concept] Frequent rebasing is encouraged in the TBD workflow. As all developers are iterating on master, it will be updated constantly. git rebase allows us to temporarily remove any commits made on our branch, apply the missing commits from master onto our branch and then reapply our commits on top of them. This ensures that we’re keeping master’s commit history consistent across all branches.
+
+Note: During the rebase you might have to deal with conflicts, this is expected and unavoidable if there are changes
+
+Now that our branch is up-to-date, we should re-test our branch, make any necessary changes and push to our remote.
+
+git push origin mr/issue-2 -f
+Since we have added new commits to our branch’s git history, we need to pass in the -f flag. This will allow git to overwrite the history of the remote branch. If we don’t do this Git will error out when it sees that the local and remote mr/issue-2 branch’s history differ.
+
+Note: Our existing PR will be updated with any changes made to our branch.
+
